@@ -1,6 +1,6 @@
 import { Message } from "@/types/chat";
-import { Separator } from "@/ui/Separator";
 import Answer from "./Answer";
+import Question from "./Question"
 
 export interface ChatList {
   messages: Message[];
@@ -12,11 +12,14 @@ export function Messages({ messages }: ChatList) {
   }
 
   return (
-    <div className="relative mx-auto max-w-2xl px-4">
+    <div className="flex flex-col relative mx-auto max-w-4xl px-4 gap-3">
       {messages.map((message: Message, index: number) => (
         <div key={message.id}>
-          <Answer content={message.content} />
-          {index < messages.length - 1 && <Separator className="my-4" />}
+          {message.isAIMessage ? (
+            <Answer content={message.content} />
+          ) : (
+            <Question content={message.content} />
+          )}
         </div>
       ))}
     </div>

@@ -17,37 +17,48 @@ export function Chat({ className }: ChatProps) {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
-  const [streamingText, setStreamingText] = useState<string>("");
+  const [streamingNode, setStreamingNode] = useState<Message | null>(null);
   const { handleStreamMessage } = useStreamingMessage();
 
   const { messagesRef, scrollRef, visibilityRef } = useScrollAnchor();
 
   useEffect(() => {
-    if (isStreaming) {
-      if (messages.find((m) => m.id === "2")) {
+    if (isStreaming && streamingNode) {
+      if (messages.find((m) => m.id === streamingNode.id)) {
         const cloneMessages = [...messages];
         cloneMessages.pop();
-        setMessages([...cloneMessages, { id: "2", content: streamingText }]);
+        setMessages([
+          ...cloneMessages,
+          { ...streamingNode, content: streamingNode.content },
+        ]);
       } else {
         const cloneMessages = [...messages];
-        setMessages([...cloneMessages, { id: "2", content: streamingText }]);
+        setMessages([...cloneMessages, streamingNode]);
       }
     }
-  }, [isStreaming, streamingText, messages]);
+  }, [isStreaming, streamingNode, messages.length]);
 
   const onReadStream = (message: Message) => {
     if (message.content) {
-      setStreamingText((prev) => prev.concat(message.content));
+      setStreamingNode((prev) => ({
+        ...prev!,
+        content: prev!.content.concat(message.content),
+      }));
     }
   };
 
   const handleSubmit = async (message: string) => {
-    const newMessages = [...messages, { id: "1", content: message }];
+    const newMessages = [
+      ...messages,
+      { id: v4(), content: message, isAIMessage: false },
+    ];
     setMessages(newMessages);
     setIsStreaming(true);
+    const streamingNode = { id: v4(), content: "", isAIMessage: true }
+    setStreamingNode(streamingNode);
     await handleStreamMessage("/api/chat", onReadStream, {
       method: "POST",
-      body: JSON.stringify({ id: 2, content: message }),
+      body: JSON.stringify({ id: streamingNode.id, content: message }),
     });
     setIsStreaming(false);
   };
