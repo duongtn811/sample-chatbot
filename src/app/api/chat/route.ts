@@ -10,9 +10,10 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const chatResponse = await openai.chat.completions.create({
-        model: "gpt-4",
+        model: "gpt-4o-mini",
         messages: [{ role: "user", content: body.content }],
         stream: true,
+        max_tokens: 1024
     });
 
     const stream = iteratorToStream(
