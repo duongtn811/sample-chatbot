@@ -6,6 +6,8 @@ import { Button } from "@/ui/Button";
 import { IconArrowElbow } from "@/ui/Icons";
 import { useEnterSubmit } from "@/hooks/useEnterSubmit";
 import { useRouter } from "next/navigation";
+import { ChatContext } from "../Chat/Chat.context";
+import { useContext } from "react";
 
 export function PromptForm({
   input,
@@ -15,6 +17,7 @@ export function PromptForm({
   setInput: (value: string) => void;
 }) {
   const router = useRouter();
+  const { handleSubmit } = useContext(ChatContext)
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -39,6 +42,7 @@ export function PromptForm({
         setInput("");
         if (!value) return;
 
+        handleSubmit(value)
         // Optimistically add user message UI
         // setMessages(currentMessages => [
         //   ...currentMessages,
