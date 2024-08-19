@@ -63,13 +63,4 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme). Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## Learn More
-
-To learn more about Next.js, check out the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - Learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - An interactive Next.js tutorial.
-
-Feel free to check out the [Next.js GitHub repository](https://github.com/vercel/next.js/) for contributions and feedback.
+This project is deployed in Vercel by default Vercel support
