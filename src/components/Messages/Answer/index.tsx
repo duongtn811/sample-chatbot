@@ -5,7 +5,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import directive from "remark-directive";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { vs } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 type Props = {
   content: string;
@@ -39,7 +39,7 @@ function Answer({ content, className }: Props) {
                 ref={syntaxRef}
                 PreTag="div"
                 language={match[1]}
-                style={dark}
+                style={vs}
               >
                 {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
