@@ -14,7 +14,7 @@ type Props = {
 
 function Answer({ content, className }: Props) {
   const syntaxRef = useRef<SyntaxHighlighter | null>(null);
-  
+
   return (
     <div>
       <Markdown
@@ -31,14 +31,14 @@ function Answer({ content, className }: Props) {
           th: ({ children, ...props }) => <th {...props}>{children}</th>,
           td: ({ children, ...props }) => <td {...props}>{children}</td>,
           code(props) {
-            const {children, className, node, ...rest} = props
-            const match = /language-(\w+)/.exec(className || '')
+            const { children, className, node, ...rest } = props;
+            const match = /language-(\w+)/.exec(className || "");
             return match ? (
               <SyntaxHighlighter
                 {...rest}
                 ref={syntaxRef}
                 PreTag="div"
-                children={String(children).replace(/\n$/, '')}
+                children={String(children).replace(/\n$/, "")}
                 language={match[1]}
                 style={dark}
               />
@@ -46,8 +46,8 @@ function Answer({ content, className }: Props) {
               <code {...rest} className={className}>
                 {children}
               </code>
-            )
-          }
+            );
+          },
         }}
       >
         {content}

@@ -5,19 +5,11 @@ import Textarea from "react-textarea-autosize";
 import { Button } from "@/ui/Button";
 import { IconArrowElbow } from "@/ui/Icons";
 import { useEnterSubmit } from "@/hooks/useEnterSubmit";
-import { useRouter } from "next/navigation";
 import { ChatContext } from "../Chat/Chat.context";
 import { useContext } from "react";
 
-export function PromptForm({
-  input,
-  setInput,
-}: {
-  input: string;
-  setInput: (value: string) => void;
-}) {
-  const router = useRouter();
-  const { handleSubmit } = useContext(ChatContext)
+export function PromptForm() {
+  const { handleSubmit, input, setInput } = useContext(ChatContext)
   const { formRef, onKeyDown } = useEnterSubmit();
   const inputRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -32,29 +24,11 @@ export function PromptForm({
       ref={formRef}
       onSubmit={async (e: any) => {
         e.preventDefault();
-
-        // Blur focus on mobile
-        if (window.innerWidth < 600) {
-          e.target["message"]?.blur();
-        }
-
         const value = input.trim();
         setInput("");
         if (!value) return;
 
         handleSubmit(value)
-        // Optimistically add user message UI
-        // setMessages(currentMessages => [
-        //   ...currentMessages,
-        //   {
-        //     id: nanoid(),
-        //     display: <UserMessage>{value}</UserMessage>
-        //   }
-        // ])
-
-        // Submit and get response message
-        // const responseMessage = await submitUserMessage(value)
-        // setMessages(currentMessages => [...currentMessages, responseMessage])
       }}
     >
       <div className="relative flex max-h-60 w-full grow flex-col overflow-hidden bg-background sm:rounded-md sm:border">

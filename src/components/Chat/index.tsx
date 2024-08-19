@@ -20,7 +20,7 @@ export function Chat({ className }: ChatProps) {
   const [streamingNode, setStreamingNode] = useState<Message | null>(null);
   const { handleStreamMessage } = useStreamingMessage();
 
-  const { messagesRef, scrollRef, visibilityRef } = useScrollAnchor();
+  const { messagesRef, scrollRef, visibilityRef } = useScrollAnchor(isStreaming);
 
   useEffect(() => {
     if (isStreaming && streamingNode) {
@@ -64,7 +64,7 @@ export function Chat({ className }: ChatProps) {
   };
 
   return (
-    <ChatContext.Provider value={{ input, setInput, handleSubmit }}>
+    <ChatContext.Provider value={{ input, setInput, setMessages, handleSubmit }}>
       <div
         className="group w-full overflow-auto pl-0 peer-[[data-state=open]]:lg:pl-[250px] peer-[[data-state=open]]:xl:pl-[300px]"
         ref={scrollRef}
@@ -76,7 +76,7 @@ export function Chat({ className }: ChatProps) {
           {messages.length ? <Messages messages={messages} /> : <EmptyScreen />}
           <div className="w-full h-px" ref={visibilityRef} />
         </div>
-        <ChatPanel input={input} setInput={setInput} />
+        <ChatPanel/>
       </div>
     </ChatContext.Provider>
   );
