@@ -13,7 +13,8 @@ export async function POST(request: NextRequest) {
         model: "gpt-4o-mini",
         messages: [{ role: "user", content: body.content }],
         stream: true,
-        max_tokens: 1024
+        max_tokens: 4096,
+        temperature: 1,
     });
 
     const stream = iteratorToStream(
